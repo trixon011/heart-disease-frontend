@@ -52,17 +52,15 @@ const Predict = () => {
     }
 
     try {
-      const res = await fetch("http://localhost:5000/api/predict", {
+      const res = await fetch("https://backend-5jrx.onrender.com/api/predict", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ input: values })
+        body: JSON.stringify({ input: values }),
       });
       const data = await res.json();
       if (data.error) {
         setError(data.error);
       } else {
-        // Assuming backend returns risk label or probability,
-        // adjust this line accordingly:
         setResult(data.risk || (data.result === 1 ? "🧠 High Risk of Heart Disease" : "💓 Low Risk"));
       }
     } catch (err) {

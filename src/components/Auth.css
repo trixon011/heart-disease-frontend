@@ -82,3 +82,14 @@ body, html {
   margin-top: auto; /* push footer to bottom */
   user-select: none;
 }
+
+/* Auth.css */
+.auth-page-wrapper {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.auth-page-wrapper > div {
+  flex: none;
+}
