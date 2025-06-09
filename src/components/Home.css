@@ -1,0 +1,177 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Montserrat', sans-serif;
+  background-color: linen;
+  color: #222;
+}
+
+/* Hero Section */
+.hero {
+  background: linear-gradient(to right, skyblue, turquoise);
+  padding: 80px 5vw;
+  color: navy;
+  text-align: center;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+.hero p {
+  font-size: 1.3rem;
+  margin-bottom: 30px;
+}
+
+.hero-buttons {
+  margin-top: 20px;
+}
+
+.hero-buttons button {
+  padding: 12px 30px;
+  font-size: 1rem;
+  background-color: gold;
+  color: navy;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.hero-buttons button:hover {
+  background-color: #f0c000;
+}
+
+/* Content Sections - Full Width, Left-Aligned */
+.section {
+  padding: 60px 5vw;
+  background-color: linen;
+}
+
+.section.alt {
+  background-color: #d9f9f6;
+}
+
+.section h2 {
+  font-size: 2.2rem;
+  color: navy;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.section p {
+  font-size: 1.15rem;
+  line-height: 1.8;
+  margin-bottom: 20px;
+  text-align: left;
+}
+
+.section ul {
+  margin-left: 20px;
+  text-align: left;
+}
+
+.section ul li {
+  font-size: 1.1rem;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 2.2rem;
+  }
+
+  .hero p,
+  .section p,
+  .section ul li {
+    font-size: 1rem;
+  }
+
+  .section {
+    padding: 40px 20px;
+  }
+}
+
+.tips {
+  list-style-type: "💡 ";
+  margin: 1rem 0;
+  padding-left: 1.5rem;
+  font-size: 1.05rem;
+  color: #1a1a1a;
+  line-height: 1.7;
+  font-weight: 500;
+}
+
+.section h2 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+.section p {
+  font-size: 1.1rem;
+  margin-bottom: 1rem;
+}
+
+.tips {
+  list-style-type: "✔ ";
+  margin: 1.2rem 0;
+  padding-left: 2rem;
+  font-size: 1.05rem;
+  color: #1e1e1e;
+  line-height: 1.8;
+  font-weight: 500;
+}
+
+.section h2 {
+  font-size: 2rem;
+  margin-bottom: 0.6rem;
+}
+
+.section p {
+  font-size: 1.1rem;
+  margin-bottom: 1.2rem;
+  line-height: 1.6;
+  color: #333;
+}
+
+/* Fade & slide up animation */
+@keyframes fadeSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero,
+.section {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+/* Animate class triggers animation */
+.hero.animate,
+.section.animate {
+  animation: fadeSlideUp 0.7s forwards;
+}
+
+/* Button animation */
+.hero-buttons button {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  will-change: transform;
+}
+
+.hero-buttons button:hover {
+  transform: scale(1.1) rotate(-3deg);
+  box-shadow: 0 6px 12px rgba(64, 224, 208, 0.7);
+}
+
