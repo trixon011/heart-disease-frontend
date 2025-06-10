@@ -41,7 +41,7 @@ const Predict = () => {
     setResult(null);
     setLoading(true);
 
-    const frontendOrder = ['age', 'trestbps', 'chol', 'thalach', 'oldpeak', 'sex', 'cp', 'fbs', 'restecg', 'exang', 'slope', 'ca', 'thal'];
+    const frontendOrder = [ age, trestbps, chol, thalach, oldpeak,sex, cp, fbs, restecg, exang, slope, ca, thal ];
 
     const values = frontendOrder.map(key => Number(inputData[key]));
 
