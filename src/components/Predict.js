@@ -23,10 +23,6 @@ const Predict = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const handleChange = (e) => {
-    setInputData({ ...inputData, [e.target.name]: e.target.value });
-  };
-
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -35,13 +31,17 @@ const Predict = () => {
     }
   }, [navigate]);
 
+  const handleChange = (e) => {
+    setInputData({ ...inputData, [e.target.name]: e.target.value });
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError('');
     setResult(null);
     setLoading(true);
 
-    const frontendOrder = [ age, trestbps, chol, thalach, oldpeak,sex, cp, fbs, restecg, exang, slope, ca, thal ];
+    const frontendOrder = ['age', 'trestbps', 'chol', 'thalach', 'oldpeak', 'sex', 'cp', 'fbs', 'restecg', 'exang', 'slope', 'ca', 'thal'];
 
     const values = frontendOrder.map(key => Number(inputData[key]));
 
@@ -57,15 +57,20 @@ const Predict = () => {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ input: values }),
       });
+
       const data = await res.json();
+
       if (data.error) {
         setError(data.error);
       } else {
-        setResult(data.risk || (data.result === 1 ? "🧠 High Risk of Heart Disease" : "💓 Low Risk"));
+        const probabilityText = data.probability !== undefined ? ` (Probability: ${data.probability})` : '';
+        const riskText = data.risk || (data.result === 1 ? "🧠 High Risk" : "💓 Low Risk");
+        setResult(`${riskText}${probabilityText}`);
       }
     } catch (err) {
       setError("Server error. Please try again.");
     }
+
     setLoading(false);
   };
 
@@ -75,15 +80,15 @@ const Predict = () => {
 
       <form onSubmit={handleSubmit} className="predict-form">
         {/* NUMERIC INPUTS */}
-        <label>Age: <input type="number" name="age" value={inputData.age} onChange={handleChange} /></label>
-        <label>Resting BP: <input type="number" name="trestbps" value={inputData.trestbps} onChange={handleChange} /></label>
-        <label>Cholesterol: <input type="number" name="chol" value={inputData.chol} onChange={handleChange} /></label>
-        <label>Max Heart Rate: <input type="number" name="thalach" value={inputData.thalach} onChange={handleChange} /></label>
-        <label>Oldpeak: <input type="number" step="0.1" name="oldpeak" value={inputData.oldpeak} onChange={handleChange} /></label>
+        <label>Age: <input type="number" name="age" value={inputData.age} onChange={handleChange} required /></label>
+        <label>Resting BP: <input type="number" name="trestbps" value={inputData.trestbps} onChange={handleChange} required /></label>
+        <label>Cholesterol: <input type="number" name="chol" value={inputData.chol} onChange={handleChange} required /></label>
+        <label>Max Heart Rate: <input type="number" name="thalach" value={inputData.thalach} onChange={handleChange} required /></label>
+        <label>Oldpeak: <input type="number" step="0.1" name="oldpeak" value={inputData.oldpeak} onChange={handleChange} required /></label>
 
         {/* DROPDOWNS */}
         <label>Sex:
-          <select name="sex" value={inputData.sex} onChange={handleChange}>
+          <select name="sex" value={inputData.sex} onChange={handleChange} required>
             <option value="">Select</option>
             <option value="1">Male</option>
             <option value="0">Female</option>
@@ -91,7 +96,7 @@ const Predict = () => {
         </label>
 
         <label>Chest Pain Type:
-          <select name="cp" value={inputData.cp} onChange={handleChange}>
+          <select name="cp" value={inputData.cp} onChange={handleChange} required>
             <option value="">Select</option>
             <option value="0">Typical Angina</option>
             <option value="1">Atypical Angina</option>
@@ -101,7 +106,7 @@ const Predict = () => {
         </label>
 
         <label>Fasting Blood Sugar &gt; 120?
-          <select name="fbs" value={inputData.fbs} onChange={handleChange}>
+          <select name="fbs" value={inputData.fbs} onChange={handleChange} required>
             <option value="">Select</option>
             <option value="1">Yes</option>
             <option value="0">No</option>
@@ -109,7 +114,7 @@ const Predict = () => {
         </label>
 
         <label>Rest ECG:
-          <select name="restecg" value={inputData.restecg} onChange={handleChange}>
+          <select name="restecg" value={inputData.restecg} onChange={handleChange} required>
             <option value="">Select</option>
             <option value="0">Normal</option>
             <option value="1">ST-T Abnormality</option>
@@ -118,7 +123,7 @@ const Predict = () => {
         </label>
 
         <label>Exercise Induced Angina?
-          <select name="exang" value={inputData.exang} onChange={handleChange}>
+          <select name="exang" value={inputData.exang} onChange={handleChange} required>
             <option value="">Select</option>
             <option value="1">Yes</option>
             <option value="0">No</option>
@@ -126,7 +131,7 @@ const Predict = () => {
         </label>
 
         <label>Slope:
-          <select name="slope" value={inputData.slope} onChange={handleChange}>
+          <select name="slope" value={inputData.slope} onChange={handleChange} required>
             <option value="">Select</option>
             <option value="0">Upsloping</option>
             <option value="1">Flat</option>
@@ -135,7 +140,7 @@ const Predict = () => {
         </label>
 
         <label>Number of Major Vessels (0–3):
-          <select name="ca" value={inputData.ca} onChange={handleChange}>
+          <select name="ca" value={inputData.ca} onChange={handleChange} required>
             <option value="">Select</option>
             <option value="0">0</option>
             <option value="1">1</option>
@@ -145,7 +150,7 @@ const Predict = () => {
         </label>
 
         <label>Thalassemia:
-          <select name="thal" value={inputData.thal} onChange={handleChange}>
+          <select name="thal" value={inputData.thal} onChange={handleChange} required>
             <option value="">Select</option>
             <option value="1">Normal</option>
             <option value="2">Fixed Defect</option>
